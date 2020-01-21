@@ -33,7 +33,7 @@ CREATE TABLE detalle_factura(id SERIAL,
 	valor_total_por_producto FLOAT,
 	PRIMARY KEY(id, facturas_id));
 
-INSERT INTO clientes(rut, nombre, apellido_paterno, 		apellido_materno, direccion) VALUES('1234567', 'Laura', 'Parez', 'Perez', 'porahi nomas 12'), ('2345678', 'Mingo', 'Cuasi', 'Lopez', 'vive mas cerca 356 ap.3'), ('1345689', 'Juan', 'Pasa', 'De La Rua', 'un poco mas lejos 67 piso 8'), ('41236578', 'Yihi','Puig', 'Sera', 'alejandose un poco'), ('9465273', 'Pasara', 'Pronto', 'Serres', 'estamos ahi 123'); 
+INSERT INTO clientes(rut, nombre, apellido_paterno, apellido_materno, direccion) VALUES('1234567', 'Laura', 'Parez', 'Perez', 'porahi nomas 12'), ('2345678', 'Mingo', 'Cuasi', 'Lopez', 'vive mas cerca 356 ap.3'), ('1345689', 'Juan', 'Pasa', 'De La Rua', 'un poco mas lejos 67 piso 8'), ('41236578', 'Yihi','Puig', 'Sera', 'alejandose un poco'), ('9465273', 'Pasara', 'Pronto', 'Serres', 'estamos ahi 123'); 
 
 INSERT INTO categorias(nombre, descripcion) VALUES ('Hogar', 'productos para el hogar'), ('Viajes', 'paquetes de viajes'), ('Celulares', 'telefonia movil');
 
@@ -54,4 +54,16 @@ INSERT INTO detalle_factura(facturas_id, productos_id, valor_unitario, cantidad,
 INSERT INTO facturas(fecha, clientes_id, subtotal, iva, total_factura) VALUES ('2020-01-02', '4', '46', '4.6', '50.6'), ('2020-01-02', '4', '55', '5.5', '60.5'), ('2020-01-02', '4', '210', '21', '231'), ('2020-01-02', '4', '25', '2.5', '27.5');
 
 INSERT INTO detalle_factura(facturas_id, productos_id, valor_unitario, cantidad, valor_total_por_producto) VALUES ('7', '7', '23', '2', '46'), ('8', '8', '15', '1', '15'), ('8', '1', '20', '2', '40'), ('9', '2', '100', '1', '100'), ('9', '5', '40', '2', '80'), ('9', '6', '30', '1', '30'), ('10', '4', '25', '1', '25');
+
+# PRIMERA PREGUNTA
+SELECT clientes.id, clientes.rut, clientes.nombre, clientes.apellido_paterno, facturas.total_factura FROM clientes INNER JOIN facturas ON clientes.id = facturas.clientes_id WHERE facturas.total_factura = (SELECT max(total_factura) from facturas);
+
+
+# SEGUNDA PREGUNTA
+SELECT clientes.id, clientes.rut, clientes.nombre, clientes.apellido_paterno, facturas.total_factura FROM clientes INNER JOIN facturas ON clientes.id = facturas.clientes_id WHERE facturas.total_factura > 100;
+
+#TERCERA PREGUNTA
+SELECT clientes.id, clientes.rut, clientes.nombre, clientes.apellido_paterno, detalle_factura.productos_id FROM (clientes INNER JOIN facturas ON clientes.id = facturas.clientes_id INNER JOIN detalle_factura ON facturas.id = detalle_factura.facturas_id) WHERE detalle_factura.productos_id = 6;
+
+
 
